@@ -10,6 +10,7 @@ URL:		http://www.percona.com/docs/wiki/percona-xtrabackup:start
 Source0:	http://ftp.gwdg.de/pub/misc/mysql/Downloads/MySQL-5.0/mysql-5.0.83.tar.gz
 # Source0-md5:	051392064a1e32cca5c23a593908b10e
 Source1:	xtrabackup.tar.bz2
+# Source1-md5:	79ad151ec9055d30ee30d66993751f98
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
