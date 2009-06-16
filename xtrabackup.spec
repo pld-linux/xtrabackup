@@ -1,14 +1,15 @@
 # TODO
-# - which configure args should be set as mysql.spec?
+# - which configure args should be set? same as mysql.spec?
 Summary:	Open source backup tool for InnoDB and XtraDB
 Name:		xtrabackup
-Version:	0.3
-Release:	0.1
+Version:	0.7
+Release:	0.2
 License:	GPL v2
 Group:		Applications/Databases
-URL:		https://launchpad.net/percona-xtrabackup/
-Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	3400a3f671719206cba56b29255f70b1
+URL:		http://www.percona.com/docs/wiki/percona-xtrabackup:start
+Source0:	http://ftp.gwdg.de/pub/misc/mysql/Downloads/MySQL-5.0/mysql-5.0.83.tar.gz
+# Source0-md5:	051392064a1e32cca5c23a593908b10e
+Source1:	xtrabackup.tar.bz2
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -16,20 +17,29 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %undefine	configure_cache
 
 %description
-OpenSource version of InnoDB backup with support of Percona
-extensions.
+Percona XtraBackup is OpenSource online (non-blockable) backup
+solution for InnoDB and XtraDB engines. It works with MySQL 5.0 and
+5.1 versions (InnoDB Plugin is not supported yet as for alpha-0.3) and
+also can handle MyISAM tables.
 
 %prep
-%setup -q
+%setup -qc -a1
+mv mysql-*/* .
+%{__patch} -p1 < xtrabackup/fix_innodb_for_backup.patch
+mv xtrabackup innobase
 
 %build
 # The compiler flags are as per mysql "official" spec ;)
 CXXFLAGS="%{rpmcflags} -felide-constructors -fno-rtti -fno-exceptions %{!?debug:-fomit-frame-pointer}"
 CFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer}"
 
-%configure
+%configure \
+	--with-extra-charsets=all
 %{__make}
-%{__make} -C innobase/xtrabackup
+%{__make} -C innobase/xtrabackup \
+	CC="%{__cc}" \
+	CXXFLAGS="$CFLAGS" \
+	CFLAGS="$CFLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
