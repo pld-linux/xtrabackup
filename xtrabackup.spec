@@ -1,17 +1,23 @@
+# NOTES
+# - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.1/installation/compiling_xtrabackup.html
 # TODO
 # - system zlib (seems unmodified)
 # - BR deps (for libarchive, mysql builds)
+# - repackage tarball without:
+# Percona-Server-5.1.73-rel14.11.tar.gz
+# Percona-Server-5.5.35-rel33.0.tar.gz
+# mysql-5.1.73.tar.gz
+# mysql-5.5.35.tar.gz
+# mysql-5.6.15.tar.gz
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.0.3
-Release:	0.1
+Version:	2.1.8
+Release:	0.2
 License:	GPL v2
 Group:		Applications/Databases
-URL:		http://www.percona.com/doc/percona-xtrabackup/
 Source0:	http://www.percona.com/downloads/XtraBackup/XtraBackup-%{version}/source/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	f59e7d26b71bd105d11a8d9eb665faad
-Source1:	http://s3.amazonaws.com/percona.com/downloads/community/mysql-5.5.17.tar.gz
-# Source1-md5:	dcb6a06e68c5e8f30f57b15300730c9c
+# NoSource0-md5:	c36df9d65e07b292e1e63372d8a4bdec
+URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
 BuildRequires:	libaio-devel
@@ -26,13 +32,18 @@ Percona XtraBackup is OpenSource online (non-blockable) backup
 solution for InnoDB and XtraDB engines.
 
 %prep
-%setup -q -n percona-%{name}-%{version} -a1
+%setup -q -n percona-%{name}-%{version}
 
-mv mysql-5.5.* mysql-5.5
-cd mysql-5.5
-%{__patch} -p1 < ../patches/innodb55.patch
+#mv mysql-5.5.* mysql-5.5
+#cd mysql-5.5
+#%{__patch} -p1 < ../patches/innodb55.patch
 
 %build
+# This BUILD section is expanded from './utils/build.sh innodb56' because we need to pass our own flags
+
+./utils/build.sh innodb56
+
+%if 0
 # The compiler flags are as per mysql "official" spec ;)
 export CC="%{__cc}"
 export CXX="%{__cxx}"
@@ -83,14 +94,15 @@ cd src
 export LIBS="$LIBS -lrt"
 %{__make} MYSQL_ROOT_DIR=$server_dir clean
 %{__make} MYSQL_ROOT_DIR=$server_dir XTRABACKUP_VERSION=$XTRABACKUP_VERSION $xtrabackup_target
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 install -p innobackupex $RPM_BUILD_ROOT%{_bindir}
 install -p src/xbstream $RPM_BUILD_ROOT%{_bindir}
-install -p src/xtrabackup_innodb55 $RPM_BUILD_ROOT%{_bindir}
-cp -p doc/xtrabackup.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install -p src/xtrabackup_56 $RPM_BUILD_ROOT%{_bindir}
+#cp -p doc/xtrabackup.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,5 +111,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/innobackupex
 %attr(755,root,root) %{_bindir}/xbstream
-%attr(755,root,root) %{_bindir}/xtrabackup_innodb55
-%{_mandir}/man1/xtrabackup.1*
+%attr(755,root,root) %{_bindir}/xtrabackup_56
+#%{_mandir}/man1/xtrabackup.1*
