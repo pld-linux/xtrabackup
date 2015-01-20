@@ -4,14 +4,16 @@
 # - system zlib (seems unmodified)
 # - BR deps (for libarchive, mysql builds)
 # - 2.2: build gets this error: build/probes_mysql.o: No such file or directory
+#   cd /home/users/glen/rpm/packages/BUILD.i686-linux/percona-xtrabackup-2.2.8/build/mysys && /usr/bin/ar r /home/users/glen/rpm/packages/BUILD.i686-linux/percona-xtrabackup-2.2.8/build/mysys/libmysys.a /home/users/glen/rpm/packages/BUILD.i686-linux/percona-xtrabackup-2.2.8/build/probes_mysql.o
+#   /usr/bin/ar: /home/users/glen/rpm/packages/BUILD.i686-linux/percona-xtrabackup-2.2.8/build/probes_mysql.o: No such file or directory
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.2.3
+Version:	2.2.8
 Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	http://www.percona.com/downloads/XtraBackup/LATEST/source/tarball/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	9867f4059d31e15e7b1f45a9a9048531
+# Source0-md5:	70455ad63178f24503620263ad3d2d53
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
