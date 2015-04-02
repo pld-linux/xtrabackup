@@ -5,12 +5,12 @@
 # - BR deps (for libarchive, mysql builds)
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.2.8
+Version:	2.2.10
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	http://www.percona.com/downloads/XtraBackup/LATEST/source/tarball/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	70455ad63178f24503620263ad3d2d53
+# Source0-md5:	81c70aeff37537331b3be0a0d408265a
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
@@ -54,6 +54,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# TODO: find fix in make or cmake rules
+install -d $RPM_BUILD_ROOT%{_mandir}
+b=$(readlink -f %{_builddir})
+mv $RPM_BUILD_ROOT$b/percona-xtrabackup-%{version}/build/man/man1 $RPM_BUILD_ROOT%{_mandir}
+
 %{__rm} -r $RPM_BUILD_ROOT%{_prefix}/xtrabackup-test
 
 %clean
@@ -65,3 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xbcrypt
 %attr(755,root,root) %{_bindir}/xbstream
 %attr(755,root,root) %{_bindir}/xtrabackup
+%{_mandir}/man1/innobackupex.1*
+%{_mandir}/man1/xbcrypt.1*
+%{_mandir}/man1/xbstream.1*
+%{_mandir}/man1/xtrabackup.1*
