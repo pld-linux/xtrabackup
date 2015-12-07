@@ -6,7 +6,7 @@
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
 Version:	2.3.2
-Release:	0.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
@@ -72,6 +72,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/innobackupex
+%attr(755,root,root) %{_bindir}/xbcloud
+%attr(755,root,root) %{_bindir}/xbcloud_osenv
 %attr(755,root,root) %{_bindir}/xbcrypt
 %attr(755,root,root) %{_bindir}/xbstream
 %attr(755,root,root) %{_bindir}/xtrabackup
