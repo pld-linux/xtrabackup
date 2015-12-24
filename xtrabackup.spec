@@ -6,7 +6,7 @@
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
 Version:	2.3.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
