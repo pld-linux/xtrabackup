@@ -5,12 +5,12 @@
 # - BR deps (for libarchive, mysql builds)
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.3.2
-Release:	3
+Version:	2.3.3
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	aff6e19b0b1069ac270e2d4d80b6e435
+# Source0-md5:	eb2c006a75b5099665f04a54211fe8d5
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
