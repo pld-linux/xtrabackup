@@ -2,7 +2,6 @@
 # - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.2/installation/compiling_xtrabackup.html
 # TODO
 # - system zlib (seems unmodified)
-# - BR deps (for libarchive, mysql builds)
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
 Version:	2.3.3
@@ -14,11 +13,22 @@ Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{versi
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
+BuildRequires:	acl-devel
+BuildRequires:	curl-devel
+BuildRequires:	expat-devel
+BuildRequires:	gnupg
 BuildRequires:	libaio-devel
-#BuildRequires:	libarchive-devel
+BuildRequires:	libarchive-devel
+BuildRequires:	bison
+BuildRequires:	libev-devel
+BuildRequires:	libgcrypt-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libxml2-devel
 BuildRequires:	ncurses-devel >= 4.2
-#BuildRequires:	zlib-devel
+BuildRequires:	python-modules
+BuildRequires:	readline-devel
+BuildRequires:	xxd
+BuildRequires:	sphinx-pdg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,7 +56,6 @@ cd build
 	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DENABLE_DTRACE=OFF \
-	-DWITH_EDITLINE=system \
 	-DWITH_PIC=ON \
 	-DWITH_READLINE=system \
 	-DWITH_ZLIB=system \
