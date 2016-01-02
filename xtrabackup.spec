@@ -62,6 +62,7 @@ cd build
 	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DENABLE_DTRACE=OFF \
+	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
 	-DWITH_PIC=ON \
 	-DWITH_READLINE=system \
 	-DWITH_ZLIB=system \
