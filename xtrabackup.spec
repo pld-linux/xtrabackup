@@ -1,7 +1,5 @@
 # NOTES
 # - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.2/installation/compiling_xtrabackup.html
-# TODO
-# - system zlib (seems unmodified)
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
 Version:	2.3.3
@@ -26,6 +24,7 @@ BuildRequires:	libev-devel
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel
+BuildRequires:	zlib-devel
 BuildRequires:	ncurses-devel >= 4.2
 BuildRequires:	python-modules
 BuildRequires:	readline-devel
@@ -52,6 +51,7 @@ server and backing up MyISAM tables.
 
 # use system package
 mv storage/innobase/xtrabackup/src/jsmn .
+mv zlib zlib.dist
 
 %build
 install -d build
