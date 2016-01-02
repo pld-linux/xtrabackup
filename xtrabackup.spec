@@ -10,12 +10,14 @@ License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
 # Source0-md5:	eb2c006a75b5099665f04a54211fe8d5
+Patch0:	jsmn.patch
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
 BuildRequires:	cmake >= 2.6
 BuildRequires:	acl-devel
 BuildRequires:	curl-devel
 BuildRequires:	expat-devel
+BuildRequires:	jsmn-devel
 BuildRequires:	gnupg
 BuildRequires:	libaio-devel
 BuildRequires:	libarchive-devel
@@ -46,6 +48,10 @@ server and backing up MyISAM tables.
 
 %prep
 %setup -q -n percona-%{name}-%{version}
+%patch0 -p1
+
+# use system package
+mv storage/innobase/xtrabackup/src/jsmn .
 
 %build
 install -d build
@@ -59,6 +65,7 @@ cd build
 	-DWITH_PIC=ON \
 	-DWITH_READLINE=system \
 	-DWITH_ZLIB=system \
+	-DWITH_SSL=system \
 	..
 
 %{__make}
