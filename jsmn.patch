@@ -1,18 +1,18 @@
---- percona-xtrabackup-2.3.3/./storage/innobase/xtrabackup/src/CMakeLists.txt~	2015-12-14 21:49:07.000000000 +0200
-+++ percona-xtrabackup-2.3.3/./storage/innobase/xtrabackup/src/CMakeLists.txt	2016-01-02 01:20:57.242088388 +0200
-@@ -18,7 +18,6 @@
- INCLUDE(libev)
+--- percona-xtrabackup-2.4.12/storage/innobase/xtrabackup/src/CMakeLists.txt~	2018-06-14 10:53:16.000000000 +0200
++++ percona-xtrabackup-2.4.12/storage/innobase/xtrabackup/src/CMakeLists.txt	2018-09-22 18:40:38.135505740 +0200
+@@ -21,7 +21,6 @@ INCLUDE(${MYSQL_CMAKE_SCRIPT_DIR}/compil
  
  ADD_SUBDIRECTORY(libarchive)
+ ADD_SUBDIRECTORY(crc)
 -ADD_SUBDIRECTORY(jsmn)
  
+ SET(WITH_CURL "system" CACHE STRING "Using system curl by default")
  FIND_GCRYPT()
- FIND_CURL()
-@@ -37,7 +36,6 @@
+@@ -41,7 +40,6 @@ INCLUDE_DIRECTORIES(
    ${CMAKE_SOURCE_DIR}/sql
    ${CMAKE_SOURCE_DIR}/storage/innobase/xtrabackup/src/libarchive/libarchive
    ${CMAKE_SOURCE_DIR}/storage/innobase/xtrabackup/src/quicklz
 -  ${CMAKE_SOURCE_DIR}/storage/innobase/xtrabackup/src/jsmn
+   ${CMAKE_SOURCE_DIR}/storage/innobase/xtrabackup/src/crc
    ${GCRYPT_INCLUDE_DIR}
    ${CURL_INCLUDE_DIRS}
-   ${LIBEV_INCLUDE_DIRS}

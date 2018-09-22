@@ -2,12 +2,14 @@
 # - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.2/installation/compiling_xtrabackup.html
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.3.3
-Release:	3
+Version:	2.4.12
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	eb2c006a75b5099665f04a54211fe8d5
+# Source0-md5:	c086206421a77f7c1ad28771a75cf396
+Source1:	http://downloads.sourceforge.net/boost/boost_1_59_0.tar.bz2
+# Source1-md5:	6aa9a5c6a4ca1016edd0ed1178e3cb87
 Patch0:	jsmn.patch
 URL:		http://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	bash
@@ -46,7 +48,7 @@ enhanced functionality, such as interacting with a running MySQL
 server and backing up MyISAM tables.
 
 %prep
-%setup -q -n percona-%{name}-%{version}
+%setup -q -n percona-%{name}-%{version} -a1
 %patch0 -p1
 
 # use system package
@@ -67,6 +69,7 @@ cd build
 	-DWITH_READLINE=system \
 	-DWITH_ZLIB=system \
 	-DWITH_SSL=system \
+	-DWITH_BOOST="$(pwd)/$(ls -1d ../boost_*)" \
 	..
 
 %{__make}
