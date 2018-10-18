@@ -3,7 +3,7 @@
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
 Version:	2.4.12
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
@@ -64,6 +64,7 @@ cd build
 	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DENABLE_DTRACE=OFF \
+	-DINSTALL_PLUGINDIR="%{_lib}/xtrabackup/plugins" \
 	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
 	-DWITH_PIC=ON \
 	-DWITH_READLINE=system \
@@ -101,3 +102,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xbcrypt.1*
 %{_mandir}/man1/xbstream.1*
 %{_mandir}/man1/xtrabackup.1*
+%{_libdir}/%{name}
