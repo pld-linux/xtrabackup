@@ -10,29 +10,29 @@ Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{versi
 # Source0-md5:	c086206421a77f7c1ad28771a75cf396
 Source1:	http://downloads.sourceforge.net/boost/boost_1_59_0.tar.bz2
 # Source1-md5:	6aa9a5c6a4ca1016edd0ed1178e3cb87
-Patch0:	jsmn.patch
+Patch0:		jsmn.patch
 URL:		http://www.percona.com/doc/percona-xtrabackup/
-BuildRequires:	bash
-BuildRequires:	cmake >= 2.6
 BuildRequires:	acl-devel
+BuildRequires:	bash
+BuildRequires:	bison
+BuildRequires:	cmake >= 2.6
 BuildRequires:	curl-devel
 BuildRequires:	expat-devel
-BuildRequires:	jsmn-devel
 BuildRequires:	gnupg
+BuildRequires:	jsmn-devel
 BuildRequires:	libaio-devel
 BuildRequires:	libarchive-devel
-BuildRequires:	bison
 BuildRequires:	libev-devel
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libmd-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	zlib-devel
 BuildRequires:	ncurses-devel >= 4.2
 BuildRequires:	python-modules
 BuildRequires:	readline-devel
-BuildRequires:	xxd
 BuildRequires:	sphinx-pdg
+BuildRequires:	xxd
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
