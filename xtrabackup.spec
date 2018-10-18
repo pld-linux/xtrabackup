@@ -24,6 +24,7 @@ BuildRequires:	libarchive-devel
 BuildRequires:	bison
 BuildRequires:	libev-devel
 BuildRequires:	libgcrypt-devel
+BuildRequires:	libmd-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	zlib-devel
@@ -60,6 +61,7 @@ install -d build
 cd build
 %cmake \
 	-DBUILD_CONFIG=xtrabackup_release \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DCMAKE_BUILD_TYPE=%{!?debug:RelWithDebInfo}%{?debug:Debug} \
 	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
