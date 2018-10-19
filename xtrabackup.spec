@@ -104,4 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xbcrypt.1*
 %{_mandir}/man1/xbstream.1*
 %{_mandir}/man1/xtrabackup.1*
-%{_libdir}/%{name}
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/plugins
+%attr(755,root,root) %{_libdir}/%{name}/plugins/keyring_file.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/keyring_vault.so
