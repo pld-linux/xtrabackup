@@ -12,6 +12,8 @@ Source0:	https://github.com/percona/percona-xtrabackup/archive/percona-%{name}-%
 # Source0-md5:	dfbd0310f1df084696fe16eea6efdc5d
 Source1:	http://downloads.sourceforge.net/boost/boost_1_59_0.tar.bz2
 # Source1-md5:	6aa9a5c6a4ca1016edd0ed1178e3cb87
+Patch0:		%{name}-no-common.patch
+Patch1:		%{name}-abiversion.patch
 URL:		https://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	acl-devel
 BuildRequires:	bash
@@ -71,9 +73,12 @@ kopiowanie tabel MyISAM.
 
 %prep
 %setup -q -n percona-%{name}-percona-%{name}-%{version} -a1
+%patch0 -p1
+%patch1 -p1
 
-# use system package
+# actually not used
 %{__mv} storage/innobase/xtrabackup/src/jsmn jsmn.dist
+# use system package
 %{__mv} zlib zlib.dist
 
 %build

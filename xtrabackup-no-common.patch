@@ -1,0 +1,21 @@
+--- percona-xtrabackup-percona-xtrabackup-2.4.20/storage/innobase/xtrabackup/src/CMakeLists.txt.orig	2020-04-10 21:45:19.000000000 +0200
++++ percona-xtrabackup-percona-xtrabackup-2.4.20/storage/innobase/xtrabackup/src/CMakeLists.txt	2021-04-27 18:10:04.084198107 +0200
+@@ -142,7 +142,6 @@
+ # xbstream binary
+ ########################################################################
+ MYSQL_ADD_EXECUTABLE(xbstream
+-  ds_buffer.c
+   ds_local.c
+   ds_stdout.c
+   ds_decrypt.c
+--- percona-xtrabackup-percona-xtrabackup-2.4.20/storage/innobase/xtrabackup/src/ds_tmpfile.c.orig	2020-04-10 21:45:19.000000000 +0200
++++ percona-xtrabackup-percona-xtrabackup-2.4.20/storage/innobase/xtrabackup/src/ds_tmpfile.c	2021-04-27 18:38:59.131491576 +0200
+@@ -55,7 +55,7 @@
+ 	&tmpfile_deinit
+ };
+ 
+-MY_TMPDIR mysql_tmpdir_list;
++extern MY_TMPDIR mysql_tmpdir_list;
+ 
+ static ds_ctxt_t *
+ tmpfile_init(const char *root)
