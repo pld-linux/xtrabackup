@@ -1,6 +1,7 @@
 # NOTES
 # - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.2/installation/compiling_xtrabackup.html
-Summary:	XtraBackup online backup for MySQL / InnoDB
+Summary:	XtraBackup online backup for MySQL/InnoDB
+Summary(pl.UTF-8):	XtraBackup - kopie zapasowe w locie dla MySQL-a/InnoDB
 Name:		xtrabackup
 Version:	2.4.20
 Release:	1
@@ -52,6 +53,21 @@ the innobackupex Perl script. The xtrabackup program copies and
 manipulates InnoDB and XtraDB data files, and the Perl script enables
 enhanced functionality, such as interacting with a running MySQL
 server and backing up MyISAM tables.
+
+%description -l pl.UTF-8
+Percona XtraBackup to mające otwarte źródła narzędzie do tworzenia w
+locie kopii zapasowych dla serwerów opartych na MySQL-u, nie blokujące
+bazy danych w trakcie tworzenia kopii.
+
+Potrafi zachowywać dane z tabel InnoDB, XtraDB oraz MyISAM serwerów
+MySQL 5.1, 5.5 i 5.6, a także Percona Server z XtraDB.
+
+Percona XtraBackup to połączenie programu w C xtrabackup oraz skryptu
+Perla innobackupex. Program xtrabackup kopiuje i operuje na plikach
+danych InnoDB i XtraDB, a skrypt perlowy uzupełnia o dodatkowe
+funkcje, takie jak łączność z działającym serwerem MySQL czy
+kopiowanie tabel MyISAM.
+
 
 %prep
 %setup -q -n percona-%{name}-percona-%{name}-%{version} -a1
