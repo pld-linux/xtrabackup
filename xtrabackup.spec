@@ -2,35 +2,40 @@
 # - build instructions: http://www.percona.com/doc/percona-xtrabackup/2.2/installation/compiling_xtrabackup.html
 Summary:	XtraBackup online backup for MySQL / InnoDB
 Name:		xtrabackup
-Version:	2.4.12
-Release:	4
+Version:	2.4.20
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-%{version}/source/tarball/percona-%{name}-%{version}.tar.gz
-# Source0-md5:	c086206421a77f7c1ad28771a75cf396
+#Source0Download: https://github.com/percona/percona-xtrabackup/releases
+Source0:	https://github.com/percona/percona-xtrabackup/archive/percona-%{name}-%{version}.tar.gz
+# Source0-md5:	dfbd0310f1df084696fe16eea6efdc5d
 Source1:	http://downloads.sourceforge.net/boost/boost_1_59_0.tar.bz2
 # Source1-md5:	6aa9a5c6a4ca1016edd0ed1178e3cb87
-Patch0:		jsmn.patch
-URL:		http://www.percona.com/doc/percona-xtrabackup/
+URL:		https://www.percona.com/doc/percona-xtrabackup/
 BuildRequires:	acl-devel
 BuildRequires:	bash
-BuildRequires:	bison
-BuildRequires:	cmake >= 2.6
+BuildRequires:	bison >= 2
+BuildRequires:	cmake >= 2.8.9
 BuildRequires:	curl-devel
-BuildRequires:	expat-devel
+BuildRequires:	cyrus-sasl-devel
 BuildRequires:	gnupg
-BuildRequires:	jsmn-devel
 BuildRequires:	libaio-devel
 BuildRequires:	libarchive-devel
+BuildRequires:	libatomic-devel
+BuildRequires:	libedit-devel
 BuildRequires:	libev-devel
+BuildRequires:	libevent-devel >= 2
 BuildRequires:	libgcrypt-devel
-BuildRequires:	libmd-devel
-BuildRequires:	libstdc++-devel
-BuildRequires:	libxml2-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libtirpc-devel >= 1.0
 BuildRequires:	ncurses-devel >= 4.2
+BuildRequires:	numactl-devel
+BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig
+BuildRequires:	protobuf-devel >= 2.5
 BuildRequires:	python-modules
-BuildRequires:	readline-devel
 BuildRequires:	sphinx-pdg
+BuildRequires:	systemd-units
 BuildRequires:	xxd
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -49,16 +54,16 @@ enhanced functionality, such as interacting with a running MySQL
 server and backing up MyISAM tables.
 
 %prep
-%setup -q -n percona-%{name}-%{version} -a1
-%patch0 -p1
+%setup -q -n percona-%{name}-percona-%{name}-%{version} -a1
 
 # use system package
-mv storage/innobase/xtrabackup/src/jsmn .
-mv zlib zlib.dist
+%{__mv} storage/innobase/xtrabackup/src/jsmn jsmn.dist
+%{__mv} zlib zlib.dist
 
 %build
 install -d build
 cd build
+# ENABLE_OPENSSL is for internal libarchive to use MD5 implementation from (already used) openssl instad of additionally pulling libmd
 %cmake \
 	-DBUILD_CONFIG=xtrabackup_release \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -66,26 +71,33 @@ cd build
 	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DENABLE_DTRACE=OFF \
+	-DENABLE_OPENSSL=ON \
 	-DINSTALL_PLUGINDIR="%{_lib}/xtrabackup/plugins" \
 	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
-	-DWITH_PIC=ON \
-	-DWITH_READLINE=system \
-	-DWITH_ZLIB=system \
-	-DWITH_SSL=system \
 	-DWITH_BOOST="$(pwd)/$(ls -1d ../boost_*)" \
+	-DWITH_CURL=system \
+	-DWITH_EDITLINE=system \
+	-DWITH_LIBEVENT=system \
+	-DWITH_LZ4=system \
+	-DWITH_PIC=ON \
+	-DWITH_PROTOBUF=system \
+	-DWITH_SASL=system \
+	-DWITH_SSL=system \
+	-DWITH_ZLIB=system \
 	..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# TODO: find fix in make or cmake rules
+# TODO: find fix in cmake rules (storage/innobase/xtrabackup/doc/source/CMakeLists.txt)
 install -d $RPM_BUILD_ROOT%{_mandir}
-b=$(readlink -f %{_builddir})
-mv $RPM_BUILD_ROOT$b/percona-xtrabackup-%{version}/build/man/man1 $RPM_BUILD_ROOT%{_mandir}
+b=$(readlink -f %{_builddir}/percona-%{name}-percona-%{name}-%{version})
+%{__mv} $RPM_BUILD_ROOT$b/build/man/man1 $RPM_BUILD_ROOT%{_mandir}
 
 %{__rm} -r $RPM_BUILD_ROOT%{_prefix}/xtrabackup-test
 
