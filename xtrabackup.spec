@@ -4,7 +4,7 @@ Summary:	XtraBackup online backup for MySQL/InnoDB
 Summary(pl.UTF-8):	XtraBackup - kopie zapasowe w locie dla MySQL-a/InnoDB
 Name:		xtrabackup
 Version:	2.4.20
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases
 #Source0Download: https://github.com/percona/percona-xtrabackup/releases
@@ -89,8 +89,8 @@ cd build
 	-DBUILD_CONFIG=xtrabackup_release \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DCMAKE_BUILD_TYPE=%{!?debug:RelWithDebInfo}%{?debug:Debug} \
-	-DCMAKE_C_FLAGS_RELWITHDEBINFO="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
-	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
+	-DCMAKE_C_FLAGS="%{rpmcflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
+	-DCMAKE_CXX_FLAGS="%{rpmcxxflags} -DNDEBUG -fno-omit-frame-pointer -fno-strict-aliasing" \
 	-DENABLE_DTRACE=OFF \
 	-DENABLE_OPENSSL=ON \
 	-DINSTALL_PLUGINDIR="%{_lib}/xtrabackup/plugins" \
