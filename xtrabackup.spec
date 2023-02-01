@@ -4,7 +4,7 @@ Summary:	XtraBackup online backup for MySQL/InnoDB
 Summary(pl.UTF-8):	XtraBackup - kopie zapasowe w locie dla MySQL-a/InnoDB
 Name:		xtrabackup
 Version:	2.4.20
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/Databases
 #Source0Download: https://github.com/percona/percona-xtrabackup/releases
