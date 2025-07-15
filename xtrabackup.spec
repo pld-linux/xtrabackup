@@ -73,8 +73,8 @@ kopiowanie tabel MyISAM.
 
 %prep
 %setup -q -n percona-%{name}-percona-%{name}-%{version} -a1
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 # actually not used
 %{__mv} storage/innobase/xtrabackup/src/jsmn jsmn.dist
